@@ -12,14 +12,12 @@
  *                android:value="ca-app-pub-XXXXXXXXXXXXXXXX~XXXXXXXXXX"/>
  */
 
-// ── Reemplazá estos IDs con los tuyos de AdMob ──────────────
 const AD_UNITS = {
-  // IDs de PRODUCCIÓN
-  banner:       'ca-app-pub-6295806554028984/6238006839',
-  interstitial: 'ca-app-pub-6295806554028984/9985680155',
-  rewarded:     'ca-app-pub-6295806554028984/3336511329',
+  banner:       import.meta.env.VITE_ADMOB_BANNER,
+  interstitial: import.meta.env.VITE_ADMOB_INTERSTITIAL,
+  rewarded:     import.meta.env.VITE_ADMOB_REWARDED,
 
-  // IDs de TEST — descomentar para desarrollo local
+  // IDs de TEST — definir en .env.local para desarrollo local
   // banner:       'ca-app-pub-3940256099942544/6300978111',
   // interstitial: 'ca-app-pub-3940256099942544/1033173712',
   // rewarded:     'ca-app-pub-3940256099942544/5224354917',
