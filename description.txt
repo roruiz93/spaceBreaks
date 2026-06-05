@@ -1,0 +1,148 @@
+================================================================================
+  ASTEROIDS — Descripcion del proyecto
+================================================================================
+
+QUE ES
+------
+Asteroids es un juego arcade para dispositivos moviles (Android) inspirado en
+el clasico Atari de 1979. El jugador pilotea una nave espacial y debe destruir
+asteroides y naves enemigas mientras esquiva colisiones. Esta desarrollado con
+Phaser 3, empaquetado con Capacitor y monetizado con AdMob y Google Play Billing.
+
+El juego corre en una pantalla de 480x854 px (portrait movil) y escala
+automaticamente a cualquier resolucion entre 320px y 1920px de ancho.
+Todas las texturas se generan proceduralmente al iniciar; no requiere
+archivos de imagen externos.
+
+
+CONTROLES
+---------
+  Movil (touch):
+    ◀  —  girar a la izquierda
+    ▶  —  girar a la derecha
+    ▲  —  propulsar hacia adelante
+    🔥 —  disparar
+
+  Escritorio (teclado):
+    Flechas izquierda/derecha o A/D  —  girar
+    Flecha arriba o W                —  propulsar
+    Espacio o flecha arriba          —  disparar
+
+
+MECANICAS DE JUEGO
+------------------
+  La nave parte del centro de la pantalla con 3 vidas. Los asteroides
+  grandes al ser destruidos se dividen en 2 medianos, y los medianos en
+  2 pequenos; los pequenos desaparecen definitivamente.
+
+  La pantalla es toroidal: lo que sale por un borde aparece por el opuesto
+  (nave, asteroides, balas y enemigos).
+
+  Sistema de combo:
+    - Destruir varios enemigos en menos de 3 segundos activa un multiplicador.
+    - x2 (2+ kills consecutivos), x3 (4+), x4 (8+).
+    - Un miss o pausa mayor a 3 segundos reinicia el combo.
+
+  Power-ups activables antes de comenzar la partida (comprados con monedas):
+    - Escudo      — absorbe 1 impacto sin perder vida (50 monedas)
+    - Disparo rapido — reduce el intervalo de fuego a 80ms por 10s (40 monedas)
+    - Bomba        — destruye todos los asteroides en pantalla (80 monedas)
+    - Iman         — atrae las monedas del mapa automaticamente (30 monedas)
+
+
+SISTEMA DE PUNTUACION
+----------------------
+  Objeto destruido          Puntos base
+  --------------------------------
+  Asteroide pequeno         10
+  Asteroide mediano         20
+  Asteroide grande          30
+  Enemigo OVNI              50
+
+  Con combo y premium el puntaje se multiplica:
+    puntos_finales = puntos_base x multiplicador_combo x 1.2 (si premium)
+
+  Al terminar la partida se otorgan monedas segun el score alcanzado.
+  El record historico se guarda por separado en el dispositivo.
+
+
+ENEMIGOS
+--------
+  OVNI (nave enemiga):
+    - Tiene 2 puntos de vida.
+    - Se mueve siguiendo al jugador con trayectoria sinusoidal.
+    - Dispara balas al jugador a intervalos regulares.
+    - Aparece a partir de determinados niveles de dificultad.
+    - Otorga 50 puntos al ser destruido.
+
+
+DIFICULTAD PROGRESIVA
+----------------------
+  El juego tiene 8 niveles de dificultad que escalan automaticamente por score:
+
+    Nivel 1 (0 pts)      — 3 asteroides, sin enemigos
+    Nivel 2 (500 pts)    — mas asteroides, velocidad +10%
+    Nivel 3 (1000 pts)   — primeros OVNI ocasionales
+    Nivel 4 (2000 pts)   — mayor densidad, OVNI mas frecuente
+    Nivel 5 (3500 pts)   — asteroides rapidos, enemigos agresivos
+    Nivel 6 (5000 pts)   — maxima densidad de asteroides
+    Nivel 7 (8000+ pts)  — velocidad doble, OVNI en cada oleada
+
+  Los asteroides y enemigos se regeneran por oleadas. Una nueva oleada comienza
+  cuando todos los enemigos actuales han sido destruidos.
+
+
+TIENDA
+------
+  Accesible desde el menu principal. Permite comprar con monedas:
+
+  Skins de nave:
+    - Default    — gratis
+    - Fuego      — 200 monedas
+    - Hielo      — 200 monedas
+    - Dorada     — 500 monedas
+    - Fantasma   — 1000 monedas
+
+  Power-ups consumibles (stock por partida):
+    - Escudo, Disparo rapido, Bomba, Iman (ver precios arriba)
+
+
+SISTEMA PREMIUM
+---------------
+  Suscripcion mensual de $0.99/mes a traves de Google Play Billing.
+  Beneficios:
+    - Sin publicidad
+    - Revivir gratis (en lugar de ver un anuncio)
+    - Bonus de puntaje +20% en toda la partida
+
+
+PUBLICIDAD (AdMob)
+------------------
+  - Banner       — visible durante el juego en la parte inferior (no premium).
+  - Interstitial — se muestra en la pantalla de game over cada 3 partidas.
+  - Rewarded     — el jugador puede ver un video para revivir con el doble
+                   del puntaje acumulado.
+
+
+PERSISTENCIA
+------------
+  Todo se guarda en localStorage del dispositivo (prefijo "asteroids_"):
+    - Mejor puntaje historico
+    - Monedas acumuladas
+    - Estado de suscripcion premium
+    - Skins desbloqueadas y skin activa
+    - Stock de power-ups
+    - Contador de partidas jugadas (para frecuencia de interstitials)
+
+
+TECNOLOGIAS UTILIZADAS
+-----------------------
+  - Phaser 3.60        — motor de juego 2D (fisica arcade, WebGL/Canvas)
+  - Vite 5             — bundler y servidor de desarrollo
+  - Capacitor 5        — bridge web → nativo Android
+  - AdMob (Capacitor)  — monetizacion por publicidad
+  - Google Play Billing — suscripciones in-app
+  - localStorage        — persistencia de datos del jugador
+  - Texturas procedurales — sin dependencias de imagen
+
+================================================================================
